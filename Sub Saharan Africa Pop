@@ -1,0 +1,26 @@
+! pip install wbdata
+import wbdata
+
+# Return list of all country/region codes:
+# wbdata.get_country()
+
+# Return list matching a query term:
+#wbdata.search_countries("World")
+
+## Try your own search
+wbdata.search_countries("")
+wbdata.get_source()
+SOURCE = 40 # "Population estimates and projections
+
+indicators = wbdata.get_indicator(source=SOURCE)
+indicators
+# Give variable for clarity
+variable_labels = {"SP.POP.TOTL":"SSAfrica Population"}
+
+SSafrica = wbdata.get_dataframe(variable_labels, country="SSF")
+
+# Date index is of type string; change to integers
+SSafrica.index = SSafrica.index.astype(int)
+
+# Print a few years' data
+SSafrica.head()
