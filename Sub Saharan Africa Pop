@@ -24,3 +24,5 @@ SSafrica.index = SSafrica.index.astype(int)
 
 # Print a few years' data
 SSafrica.head()
+# Useful arguments to pass include xTitle, yTitle, Title
+SSafrica.iplot(title="Fact I: Growth Rates Falling over Time",xTitle='Year',yTitle='Population')
