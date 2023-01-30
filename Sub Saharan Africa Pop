@@ -1,3 +1,4 @@
+Initial code set up
 ! pip install wbdata
 import wbdata
 
@@ -12,6 +13,7 @@ wbdata.search_countries("")
 wbdata.get_source()
 SOURCE = 40 # "Population estimates and projections
 
+Sub Saharan Africa year over year total population chart 
 indicators = wbdata.get_indicator(source=SOURCE)
 indicators
 # Give variable for clarity
@@ -24,5 +26,7 @@ SSafrica.index = SSafrica.index.astype(int)
 
 # Print a few years' data
 SSafrica.head()
+
+Sub Saharan Africa growth rate graph  
 # Useful arguments to pass include xTitle, yTitle, Title
 SSafrica.iplot(title="Fact I: Growth Rates Falling over Time",xTitle='Year',yTitle='Population')
