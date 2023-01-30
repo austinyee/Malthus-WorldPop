@@ -1,1 +1,29 @@
+wbdata.get_indicator(topic=1)
+vars = {"AG.PRD.CREL.MT":"Cereal production"}
 
+
+use=["USA", "SSF"]
+
+cereals = fix_date_index(wbdata.get_dataframe(vars,country=use)).squeeze().unstack('country')
+
+
+cereals.iplot(xTitle="Year",yTitle="Metric Tons",
+              title="Cereal Production: USA vs. Sub-Saharan Africa")
+
+#SSA vs. USA: Cereal Production.    CEREAL GRAPH
+
+
+wbdata.get_indicator(topic=15)
+vars = {"SP.ADO.TFRT":"Adolescent fertility rate"}
+
+
+use=["USA", "SSF"]
+
+fertility = fix_date_index(wbdata.get_dataframe(vars,country=use)).squeeze().unstack('country')
+
+
+
+fertility.iplot(xTitle="Year",yTitle="births per 1,000 women ages 15-19",
+              title="Adolescent fertility rate: USA vs. Sub-Saharan Africa")
+
+#SSA vs. USA: Adolescent fertility rate (births per 1,000 women ages 15-19). FERTILITY Graph
