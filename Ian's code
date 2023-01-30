@@ -1,2 +1,6 @@
-
-test
+!pip install wbdata
+import wbdata
+wbdata.get_country()
+import pandas as pd
+import numpy as np
+wbdata.get_topic()
