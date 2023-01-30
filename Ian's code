@@ -4,3 +4,22 @@ wbdata.get_country()
 import pandas as pd
 import numpy as np
 wbdata.get_topic()
+
+variable_labels = {"AG.LND.ARBL.HA":"Arable land (hectacres)"}
+variable_labels_fert = {"AG.CON.FERT.ZS" : "Fertilizer consumption (kilograms per hectare of arable land"}
+USA = wbdata.get_dataframe(variable_labels, country="USA" )
+USAfert= wbdata.get_dataframe(variable_labels_fert, country="USA" )
+#USAfood= wbdata.get_dataframe
+#NGA USA 
+# Date index is of type string; change to integers
+USA.index = USA.index.astype(int)
+USAfert.index = USAfert.index.astype(int)
+
+# Print a few years' data
+#USA.loc["date" :1990]
+#USA(index=[1990])
+USA.iloc[1:50]
+USAfert.iloc[1:50]
+
+USA.iplot(title="Arable Land",xTitle='Year',yTitle='Hectacres')
+USAfert.iplot(title="Fertilizer Utilzation", xTitle='Year', yTitle="Hectacres")
