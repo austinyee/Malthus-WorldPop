@@ -1,1 +1,28 @@
+#Great Code for comparing any (indicator) between North America and Sub-Saharan Africa
+import numpy as np
+import wbdata
+import cufflinks as cf
+cf.go_offline()
 
+def fix_date_index(df):
+    idx_vars = df.index.names
+    new = df.reset_index()
+    new.date = new.date.astype(int)
+    return new.set_index(idx_vars)
+
+from plotly.offline import init_notebook_mode, iplot
+import numpy as np
+from scipy.optimize import newton
+
+init_notebook_mode(connected=True)
+
+vars = {"SP.DYN.TFRT.IN":"Population, total"}
+
+
+use=["NAC", "SSF"]
+
+population = fix_date_index(wbdata.get_dataframe(vars,country=use)).squeeze().unstack('country','region')
+
+
+population.iplot(xTitle="Year",yTitle="population",
+              title="Population: USA vs. SSF")
