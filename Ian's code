@@ -30,38 +30,17 @@ USAfert.iplot(title="Fertilizer Utilzation", xTitle='Year', yTitle="Hectacres")
 Pandas Data frame
 #skip until line
 
-def population_dataframes(indicators):
-    """Returns a pandas DataFrame indexed by Region or Country and Year, 
-    with columns giving counts of people in different age-sex groups."""
-    labels = {}
-    for i in range(len(indicators)):
-        col_id = indicators[i]['id']
-        col_name = indicators[i]['name']
-        labels[col_id] = col_name
 
-    def find_labels(indicators):
-        """Helper function that akes in an indicator object to filter through variable 
-        keys and parse through necessary ID's to obtain relevant data. """
-        # Filter through column ID strings to obtain relevant population data.
-        r = re.compile("(SP.POP).[\d]{2}[A-Z0-9]{2}.[MAFE]{2}$")
-        col_keys = list(filter(r.match, labels))
-
-        # Add total population column at the end of COL_KEYS
-        col_keys.append('SP.POP.TOTL')
-
-        labels_filtered = {}
-        for key, value in labels.items():
-            if key in col_keys:
-                labels_filtered[key] = value
-        return labels_filtered
-
-    df_labels = find_labels(indicators)
-    return wbdata.get_dataframe(df_labels)
-#______________________________________works for almost all datasets we are looking at 
+#______________________________________works for almost all datasets we are looking at just issues with whether or not they have data for our regions
 def pandas_df(region):
-    df=wbdata.get_dataframe({'SP.POP.GROW': 'NAC Total Population growth'}, country=region) #change Region and title of data 
+    df=wbdata.get_dataframe({'SP.POP.GROW': 'SSF Total Population growth',
+                              'SP.DYN.TFRT.IN' :'Fertility rate, total (births per woman)',
+                              'SE.SEC.TCAQ.FE.ZS':'Number of trained female teachers (% of female teachers)'}, country=region)
     df.index = df.index.rename('year')
     df.index = df.index.astype(int)
+    #df = df.drop([2021,2020]) #no data for teachers in SSF none 
     return df
-pandas_df("NAC")
-#pandas_df("SSF") #when you run it for SSF you will need to change lables 
+pandas_df("SSF") #returns all years in data set
+cleaned=pandas_df("SSF")
+cleaned.head() #returns most recent 5 years
+
