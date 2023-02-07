@@ -1,1 +1,38 @@
+import geopandas
+import pandas as pd
+import matplotlib.pyplot as plt
 
+africa_population=pd.read_csv('africa-population 1.csv')
+north_america=pd.read_csv('north-america-population 1.csv')
+#reading data
+
+print(africa_population)
+print(north_america)
+
+africa_population['continent']='Africa'
+north_america['continent']='North America'
+#New column of continent values
+population=pd.concat([africa_population,north_america],axis=0)
+## Merge two demographics
+population['date']=pd.to_datetime(population['date'])
+#Set the date column to time format
+population['year']=population['date'].dt.year
+#Figure out the year
+
+world = geopandas.read_file(geopandas.datasets.get_path('naturalearth_lowres'))
+#Get global map data
+world=world[world.continent.isin(['Africa','North America'])]
+# Keep only two regions
+
+def plot(year,cmap)：
+# Define function to take 2 arguments integer year string cmap
+    fig,ax=plt.subplots(figsize=[10,6])
+    # New Canvas Size 10,6
+    world.merge(population.query('year=={}'.format(year)),on='continent').plot(# Merge world and population data by continent
+        column=' Population',# population is displayed
+        legend=True,ax=ax,cmap=cmap)# Color bar display will draw the image on the canvas just filled with color code
+    plt.title('Population of Africa and North America in {}'.format(year))# Picture title
+    plt.show()
+    
+    plot(2000,'Pastel1') # Call the function defined earlier
+    plot(2020,'Pastel2')
