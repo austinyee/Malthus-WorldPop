@@ -36,3 +36,17 @@ def plot(year,cmap)：
     
     plot(2000,'Pastel1') # Call the function defined earlier
     plot(2020,'Pastel2')
+    
+    import plotly.express as px
+    
+    px.scatter(population, x=" Population", y=" Population",
+        animation_frame="year",
+        animation_group="continent",
+        color="continent",
+        size=" Population",
+        hover_name="continent",
+        range_x=[8000000,5000000000],
+        range_y=[8000000,5000000000],
+        log_x=True,#对数轴
+        title='Africa Vs North America'
+          )
