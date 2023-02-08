@@ -45,3 +45,66 @@ def pandas_df(region):
 pandas_df("SSF") #returns all years in data set
 cleaned=pandas_df("SSF")
 cleaned.head() #returns most recent 5
+
+
+
+
+
+Pyramid
+
+!pip install wbdata
+import wbdata
+import numpy as np
+import cufflinks as cf
+#
+SOURCE = 40
+indicators = wbdata.get_indicator(source=SOURCE)
+indicators
+age_ranges = []
+
+# Ranges top out at 80, and go in five year increments
+for i in range(0,80,5):
+    age_ranges.append(f"{i:02d}"+f"{i+4:02d}")
+
+age_ranges.append("80UP")
+
+print(age_ranges)
+#
+male_variables = {"SP.POP."+age_range+".MA":"Males "+age_range for age_range in age_ranges}
+female_variables = {"SP.POP."+age_range+".FE":"Females "+age_range for age_range in age_ranges}
+
+variables = male_variables
+variables.update(female_variables)
+
+df = wbdata.get_dataframe(variables,country="NAC")
+#
+import plotly.offline as py
+import plotly.graph_objs as go
+import pandas as pd
+import numpy as np
+
+py.init_notebook_mode(connected=True)
+
+layout = go.Layout(barmode='overlay',
+                   yaxis=go.layout.YAxis(range=[0, 90], title='Age'),
+                   xaxis=go.layout.XAxis(title='Number'))
+
+year = 2020
+
+bins = [go.Bar(x = df.loc[str(year),:].filter(regex="Male").values,
+               y = [int(s[:2])+1 for s in age_ranges],
+               orientation='h',
+               name='Men',
+               marker=dict(color='yellow'),
+               hoverinfo='skip'
+               ),
+
+        go.Bar(x = -df.loc[str(year),:].filter(regex="Female").values,
+               y=[int(s[:2])+1 for s in age_ranges],
+               orientation='h',
+               name='Women',
+               marker=dict(color='red'),
+               hoverinfo='skip',
+               )
+        ]
+py.iplot(dict(data=bins, layout=layout))
