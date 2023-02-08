@@ -47,6 +47,6 @@ def plot(year,cmap)：
         hover_name="continent",
         range_x=[8000000,5000000000],
         range_y=[8000000,5000000000],
-        log_x=True,#对数轴
+        log_x=True,
         title='Africa Vs North America'
           )
