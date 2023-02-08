@@ -35,12 +35,13 @@ Pandas Data frame
 def pandas_df(region):
     df=wbdata.get_dataframe({'SP.POP.GROW': 'SSF Total Population growth',
                               'SP.DYN.TFRT.IN' :'Fertility rate, total (births per woman)',
-                              'SE.SEC.TCAQ.FE.ZS':'Number of trained female teachers (% of female teachers)'}, country=region)
+                              'SE.SEC.TCAQ.FE.ZS':'Number of trained female teachers (% of female teachers)',
+                            'SL.UEM.TOTL.FE.ZS':'Unemployment, female (% of female labor force)',
+                            'SL.UEM.TOTL.MA.ZS':  'Unemployment, male (% of male labor force)'}, country=region)
     df.index = df.index.rename('year')
     df.index = df.index.astype(int)
     #df = df.drop([2021,2020]) #no data for teachers in SSF none 
     return df
 pandas_df("SSF") #returns all years in data set
 cleaned=pandas_df("SSF")
-cleaned.head() #returns most recent 5 years
-
+cleaned.head() 
